@@ -3,23 +3,32 @@ let textGraphic;
 let quoteInput;
 
 function preload() {
-  inkShader = loadShader("shader.vert", "shader.frag");
+  try {
+    inkShader = loadShader("shader.vert", "shader.frag");
+  } catch (e) {
+    alert("Shader load failed: " + e.message);
+  }
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   noStroke();
 
-  // Reference the HTML text area
+  if (!inkShader) {
+    alert("Shader not loaded. Aborting.");
+    noLoop();
+    return;
+  }
+
+  // Create the quote input
   quoteInput = document.getElementById("quoteInput");
   quoteInput.value = "The unknown is not your enemy,\nit is your birthplace.";
 
-  // Create off-screen graphics for the quote
+  // Set up text graphics
   textGraphic = createGraphics(windowWidth, windowHeight);
   textGraphic.pixelDensity(1);
   updateTextGraphic();
 
-  // Update whenever the input changes
   quoteInput.addEventListener("input", updateTextGraphic);
 }
 
@@ -38,9 +47,11 @@ function updateTextGraphic() {
 }
 
 function draw() {
-  background(0);
-  texture(textGraphic);
+  shader(inkShader);
+  inkShader.setUniform("u_time", millis() / 1000.0);
+  inkShader.setUniform("u_resolution", [width, height]);
+  inkShader.setUniform("u_text", textGraphic); // Still here for later
+
+  texture(textGraphic); // Not needed for test shader, but won’t hurt
   rect(-width / 2, -height / 2, width, height);
 }
-
-
