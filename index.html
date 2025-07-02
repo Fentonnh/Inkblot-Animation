@@ -8,13 +8,31 @@
         margin: 0;
         overflow: hidden;
       }
+
       canvas {
         display: block;
+      }
+
+      textarea {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 60%;
+        padding: 10px;
+        font-size: 16px;
+        font-family: 'Georgia', serif;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        resize: none;
       }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   </head>
   <body>
+    <textarea id="quoteInput" placeholder="Enter your quote..." rows="3"></textarea>
     <script src="sketch.js"></script>
   </body>
 </html>
