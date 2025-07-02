@@ -6,6 +6,8 @@ uniform float u_time;
 uniform vec2 u_resolution;
 uniform sampler2D u_text;
 
+varying vec2 vTexCoord;
+
 vec2 rotate(vec2 v, float a) {
   float s = sin(a), c = cos(a);
   return mat2(c, -s, s, c) * v;
@@ -47,7 +49,7 @@ void main() {
   float n = fbm(centeredUV * 2.5 + vec2(t * 0.1, t * 0.2));
   float mask = smoothstep(radius, radius - 0.15, length(centeredUV) - n * 0.2);
 
-  vec4 textColor = texture2D(u_text, uv);
+  vec4 textColor = texture2D(u_text, vTexCoord);
   vec4 background = vec4(1.0); // white paper
 
   gl_FragColor = mix(background, textColor, mask);
