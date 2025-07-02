@@ -38,14 +38,14 @@ function updateTextGraphic() {
 }
 
 function draw() {
+  console.log("draw running");
+
   shader(inkShader);
   inkShader.setUniform("u_time", millis() / 1000.0);
   inkShader.setUniform("u_resolution", [width, height]);
   inkShader.setUniform("u_text", textGraphic);
 
-  // ✅ This was missing before — required to bind the texture
   texture(textGraphic);
-
-  // Draw the rectangle with the shader effect applied
   rect(-width / 2, -height / 2, width, height);
 }
+
