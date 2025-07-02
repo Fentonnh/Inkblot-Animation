@@ -42,13 +42,11 @@ void main() {
   vec2 centeredUV = uv * 2.0 - 1.0;
   centeredUV.x *= u_resolution.x / u_resolution.y;
 
-  // Animated growth mask using fbm
   float t = u_time * 0.4;
   float radius = 0.2 + 0.1 * sin(t);
   float n = fbm(centeredUV * 2.5 + vec2(t * 0.1, t * 0.2));
   float mask = smoothstep(radius, radius - 0.15, length(centeredUV) - n * 0.2);
 
-  // Reveal text with ink shape
   vec4 textColor = texture2D(u_text, uv);
   vec4 background = vec4(1.0); // white paper
 
